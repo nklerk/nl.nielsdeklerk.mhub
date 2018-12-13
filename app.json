@@ -51,7 +51,7 @@
       "class": "other",
       "capabilities": ["onoff"],
       "images": {
-        "large": "drivers/mhub/assets/images/large.jpg",
+        "large": "drivers/mhub/assets/images/large.png",
         "small": "drivers/mhub/assets/images/small.png"
       },
       "pair": [
