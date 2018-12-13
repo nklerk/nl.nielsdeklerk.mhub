@@ -1,0 +1,175 @@
+{
+  "id": "nl.nielsdeklerk.mhub",
+  "version": "0.0.1",
+  "compatibility": ">=1.5.0",
+  "sdk": 2,
+  "name": {
+    "en": "HD Anywhere MHUB"
+  },
+  "description": {
+    "en": "Adds support for HD Anywhere's MHUB HDMI matrix MHUB."
+  },
+  "category": ["video", "music", "appliances"],
+  "tags": {
+    "en": ["HDA", "HDANYWHERE", "HDMI", "matrix", "hub", "switch"]
+  },
+  "permissions": [],
+  "images": {
+    "large": "/assets/images/large.jpg",
+    "small": "/assets/images/small.jpg"
+  },
+  "author": {
+    "name": "Niels de Klerk",
+    "email": "mail@nielsdeklerk.nl"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Niels de Klerk",
+        "email": "mail@nielsdeklerk.nl"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "NielsdeKlerk"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/nklerk/nl.nielsdeklerk.mhub/issues"
+  },
+  "athomForumDiscussionId": 4928,
+  "homeyCommunityTopicId": 147,
+  "drivers": [
+    {
+      "id": "mhub",
+      "name": {
+        "en": "MHUB"
+      },
+      "class": "other",
+      "capabilities": ["onoff"],
+      "images": {
+        "large": "drivers/mhub/assets/images/large.jpg",
+        "small": "drivers/mhub/assets/images/small.jpg"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ]
+    }
+  ],
+  "flow": {
+    "actions": [
+      {
+        "id": "fcaInputOutput",
+        "title": {
+          "en": "Set input and output",
+          "nl": "Stel de ingang uitgang in."
+        },
+        "hint": {
+          "en": "."
+        },
+        "args": [
+          {
+            "name": "input",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "Input",
+              "nl": "Ingang"
+            }
+          },
+          {
+            "name": "output",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "Output",
+              "nl": "Uitgang"
+            }
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=mhub"
+          }
+        ]
+      },
+      {
+        "id": "fcaUControl",
+        "title": {
+          "en": "Send uControl command",
+          "nl": "Zend commando via uControl"
+        },
+        "hint": {
+          "en": "."
+        },
+        "args": [
+          {
+            "name": "io",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "Input/Output",
+              "nl": "Ingang/Uitgang"
+            }
+          },
+          {
+            "name": "command",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "command",
+              "nl": "commando"
+            }
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=mhub"
+          }
+        ]
+      },
+      {
+        "id": "fcaPronto",
+        "title": {
+          "en": "Send pronto HEX command",
+          "nl": "Zend pronto HEX commando"
+        },
+        "hint": {
+          "en": "."
+        },
+        "args": [
+          {
+            "name": "io",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "Input/Output",
+              "nl": "Ingang/Uitgang"
+            }
+          },
+          {
+            "name": "prontohex",
+            "type": "text",
+            "placeholder": {
+              "en": "0000 0000 0000... or 000000000000 or 0000, 0000, 0000",
+              "nl": "0000 0000 0000... of 000000000000 of 0000, 0000, 0000"
+            }
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=mhub"
+          }
+        ]
+      }
+    ]
+  }
+}
