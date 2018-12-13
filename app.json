@@ -1,6 +1,6 @@
 {
   "id": "nl.nielsdeklerk.mhub",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "compatibility": ">=1.5.0",
   "sdk": 2,
   "name": {
@@ -52,7 +52,7 @@
       "capabilities": ["onoff"],
       "images": {
         "large": "drivers/mhub/assets/images/large.jpg",
-        "small": "drivers/mhub/assets/images/small.jpg"
+        "small": "drivers/mhub/assets/images/small.png"
       },
       "pair": [
         {
