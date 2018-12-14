@@ -19,13 +19,15 @@ function fcaPower(deviceId, value) {
 }
 
 function fcaUControl(deviceId, args) {
-  console.log(`fcaUControl(${deviceId}, ${args}`);
-  console.log(args);
+  console.log(`fcaUControl(${deviceId}, ${args})`);
+  let api = new hdamhub.api(deviceId);
+  api.executeUcontrolCommand(args.io.id, args.command.id);
 }
 
 function fcaPronto(deviceId, args) {
-  console.log(`fcaPronto(${deviceId}, ${args}`);
-  console.log(args);
+  console.log(`fcaPronto(${deviceId}, ${args})`);
+  let api = new hdamhub.api(deviceId);
+  api.executeUcontrolCommand(args.io.id, args.prontohex);
 }
 
 function homeyFormatedDiscovery(callback) {
@@ -48,11 +50,8 @@ function homeyFormatedDiscovery(callback) {
 }
 
 async function getIo(deviceId, inputOrOutputOptional) {
-  //console.log(`getIo(,${deviceId}, ${inputOrOutputOptional});`);
   let api = new hdamhub.api(deviceId);
-  //console.log(`> await api.getSystemInfo();`);
   let mhubsysinfo = await api.getSystemInfo();
-  // console.log(`< await api.getSystemInfo();`);
   let [input, output] = mhubGetInputsOutputs(mhubsysinfo);
   if (typeof inputOrOutputOptional == "undefined") {
     return input.concat(output);
@@ -69,64 +68,73 @@ async function getIo(deviceId, inputOrOutputOptional) {
 function mhubGetInputsOutputs(mhubsysinfo) {
   let inputs = [];
   let outputs = [];
+  let io = 1;
   for (let i in mhubsysinfo.io_data.input_audio) {
     for (let input of mhubsysinfo.io_data.input_audio[i].labels) {
-      inputs.push({ name: `Input: ${input.id}`, description: input.label, id: `${input.id}` });
+      inputs.push({ name: `Input: ${input.id}`, description: input.label, id: `${input.id}`, io });
+      io = io + 1;
     }
   }
   for (let i in mhubsysinfo.io_data.input_video) {
     for (let input of mhubsysinfo.io_data.input_video[i].labels) {
-      inputs.push({ name: `Input: ${input.id}`, description: input.label, id: `${input.id}` });
+      inputs.push({ name: `Input: ${input.id}`, description: input.label, id: `${input.id}`, io });
+      io = io + 1;
     }
   }
 
   for (let i in mhubsysinfo.io_data.output_audio) {
     for (let output of mhubsysinfo.io_data.output_audio[i].labels) {
-      outputs.push({ name: `Output: ${output.id}`, description: output.label, id: `${output.id}` });
+      outputs.push({ name: `Output: ${output.id}`, description: output.label, id: `${output.id}`, io });
+      io = io + 1;
     }
   }
   for (let i in mhubsysinfo.io_data.output_video) {
     for (let output of mhubsysinfo.io_data.output_video[i].labels) {
-      outputs.push({ name: `Output: ${output.id}`, description: output.label, id: `${output.id}` });
+      outputs.push({ name: `Output: ${output.id}`, description: output.label, id: `${output.id}`, io });
+      io = io + 1;
     }
   }
-  //console.log(`inputs, outputs`);
-  // console.log(inputs);
-  // console.log(outputs);
   return [inputs, outputs];
 }
 
-async function getuControlIo(deviceId, inputOrOutputOptional) {
+async function getuControlIo(deviceId) {
   let api = new hdamhub.api(deviceId);
-  console.log(`> api.getUControlStatus();`);
   let uControlStatus = await api.getUControlStatus();
-  console.log(`< api.getUControlStatus();`);
   let uControlPorts = [];
   let io = 1;
   if (uControlStatus && uControlStatus.input && typeof uControlStatus.input == "object") {
-    for (let i of uControlStatus.input) {
-      if ((typeof inputOrOutputOptional === "undefined" || inputOrOutputOptional === "input") && i.irpack) {
-        //console.log(`> io${i.id}`);
+    for (let ucontrol of uControlStatus.input) {
+      if (ucontrol.irpack) {
         let x = await api.getUControlState(io);
-        //console.log(`< io${i.id}`);
-        uControlPorts.push({ name: `Input: ${i.id}`, description: x.name, id: io });
+        uControlPorts.push({ name: `Input: ${ucontrol.id}`, description: x.name, id: io });
       }
       io = io + 1;
     }
   }
   if (uControlStatus && uControlStatus.output && typeof uControlStatus.output == "object") {
-    for (let i of uControlStatus.output) {
-      if ((typeof inputOrOutputOptional === "undefined" || inputOrOutputOptional === "output") && i.irpack) {
-        //console.log(`> io${i.id}`);
+    for (let ucontrol of uControlStatus.output) {
+      if (ucontrol.irpack) {
         let x = await api.getUControlState(io);
-        //console.log(`< io${i.id}`);
-        uControlPorts.push({ name: `Output: ${i.id}`, description: x.name, id: io });
+        uControlPorts.push({ name: `Output: ${ucontrol.id}`, description: x.name, id: io });
       }
       io = io + 1;
     }
   }
-  //console.log(`< return`);
   return uControlPorts;
+}
+
+async function getCommands(deviceId, args) {
+  if (typeof args.io.id !== "undefined") {
+    let commands = [];
+    let api = new hdamhub.api(deviceId);
+    let x = await api.getUControlState(args.io.id);
+    for (let command of x.irpack) {
+      commands.push({ name: command.label, description: "IR Command", id: command.id });
+    }
+    return commands;
+  } else {
+    return [];
+  }
 }
 
 class hdaMhubDriver extends Homey.Driver {
@@ -135,6 +143,12 @@ class hdaMhubDriver extends Homey.Driver {
   }
   getIo(deviceId, inputOrOutputOptional) {
     return getIo(deviceId, inputOrOutputOptional);
+  }
+  getuControlIo(deviceId) {
+    return getuControlIo(deviceId);
+  }
+  getCommands(deviceId, args) {
+    return getCommands(deviceId, args);
   }
   onPairListDevices(data, callback) {
     homeyFormatedDiscovery(callback);
@@ -145,11 +159,11 @@ class hdaMhubDriver extends Homey.Driver {
   fcaPower(deviceId, value) {
     fcaPower(deviceId, value);
   }
-  fcaUControl(deviceId, value) {
-    fcaUControl(deviceId, value);
+  fcaUControl(deviceId, args) {
+    fcaUControl(deviceId, args);
   }
-  fcaPronto(deviceId) {
-    fcaPronto(deviceId);
+  fcaPronto(deviceId, args) {
+    fcaPronto(deviceId, args);
   }
 }
 module.exports = hdaMhubDriver;

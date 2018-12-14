@@ -1,6 +1,6 @@
-# HD Anywhere - MHUB
+# HDANYWHERE - MHUB
 
-This app adds support for HD Anywhere's MHUB multiroom HDtv matrix systems.
+This app adds support for HDANYWHERE's MHUB multiroom hdtv matrix systems.
 
 ## MHUB
 
@@ -18,5 +18,5 @@ With this app you can control the inputs and outputs, Send uControl commands (ir
 
 ## Usefull links
 
-- [HD Anywhere](https://hdanywhere.co.uk/)
+- [HDANYWHERE](https://hdanywhere.co.uk/)
 - [Store](http://hdanywhere.co.uk/multiroom-hdtv-matrix-systems.html)
