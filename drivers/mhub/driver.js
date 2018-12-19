@@ -6,26 +6,22 @@ const Homey = require("homey");
 const hdamhub = require("hdamhub");
 
 function fcaInputOutput(deviceId, args) {
-  console.log(`fcaInputOutput(${deviceId}, ${args.input.id} -> ${args.output.id} )`);
   let api = new hdamhub.api(deviceId);
   api.switchOutputInput(args.output.id, args.input.id);
 }
 
 function fcaPower(deviceId, value) {
-  console.log(`fcaPower(${deviceId}, ${value})`);
   let api = new hdamhub.api(deviceId);
   if (value === true) api.powerOn();
   if (value === false) api.powerOff();
 }
 
 function fcaUControl(deviceId, args) {
-  console.log(`fcaUControl(${deviceId}, ${args})`);
   let api = new hdamhub.api(deviceId);
   api.executeUcontrolCommand(args.io.id, args.command.id);
 }
 
 function fcaPronto(deviceId, args) {
-  console.log(`fcaPronto(${deviceId}, ${args})`);
   let api = new hdamhub.api(deviceId);
   api.executeUcontrolCommand(args.io.id, args.prontohex);
 }
