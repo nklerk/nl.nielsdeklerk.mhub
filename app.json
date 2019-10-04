@@ -8,7 +8,8 @@
     "en": "HDANYWHERE MHUB"
   },
   "description": {
-    "en": "This app adds support for HDANYWHERE's MHUB multiroom hdtv matrix systems."
+    "en": "This app adds support for HDANYWHERE's MHUB multiroom hdtv matrix systems.",
+    "de": "Diese App fügt die Unterstützung für HDANYWHERE MHUB Multiroom-System hinzu."
   },
   "category": ["video", "music", "appliances"],
   "tags": {
@@ -29,6 +30,11 @@
         "name": "Niels de Klerk",
         "email": "mail@nielsdeklerk.nl"
       }
+    ],
+    "translators": [
+        {
+            "name": "🇩🇪 - Markus Mahr"
+        }
     ]
   },
   "contributing": {
@@ -75,7 +81,8 @@
         "id": "fcaInputOutput",
         "title": {
           "en": "Set input and output",
-          "nl": "Stel de ingang uitgang in."
+          "nl": "Stel de ingang uitgang in.",
+          "de": "Eingang und Ausgang festlegen"
         },
         "hint": {
           "en": "."
@@ -86,7 +93,8 @@
             "type": "autocomplete",
             "placeholder": {
               "en": "Input",
-              "nl": "Ingang"
+              "nl": "Ingang",
+              "de": "Eingang"
             }
           },
           {
@@ -94,7 +102,8 @@
             "type": "autocomplete",
             "placeholder": {
               "en": "Output",
-              "nl": "Uitgang"
+              "nl": "Uitgang",
+              "de": "Ausgang"
             }
           },
           {
@@ -108,7 +117,8 @@
         "id": "fcaUControl",
         "title": {
           "en": "Send uControl command",
-          "nl": "Zend commando via uControl"
+          "nl": "Zend commando via uControl",
+          "de": "Sende ein uControl Kommando"
         },
         "hint": {
           "en": "."
@@ -119,7 +129,8 @@
             "type": "autocomplete",
             "placeholder": {
               "en": "Input/Output",
-              "nl": "Ingang/Uitgang"
+              "nl": "Ingang/Uitgang",
+              "de": "Eingang/Ausgang"
             }
           },
           {
@@ -127,7 +138,8 @@
             "type": "autocomplete",
             "placeholder": {
               "en": "command",
-              "nl": "commando"
+              "nl": "commando",
+              "de": "Kommando"
             }
           },
           {
@@ -141,7 +153,8 @@
         "id": "fcaPronto",
         "title": {
           "en": "Send pronto HEX command",
-          "nl": "Zend pronto HEX commando"
+          "nl": "Zend pronto HEX commando",
+          "de": "Sende ein pronto HEX Kommando"
         },
         "hint": {
           "en": "."
@@ -152,7 +165,8 @@
             "type": "autocomplete",
             "placeholder": {
               "en": "Input/Output",
-              "nl": "Ingang/Uitgang"
+              "nl": "Ingang/Uitgang",
+              "de": "Eingang/Ausgang"
             }
           },
           {
@@ -160,7 +174,8 @@
             "type": "text",
             "placeholder": {
               "en": "0000 0000 0000... or 000000000000 or 0000, 0000, 0000",
-              "nl": "0000 0000 0000... of 000000000000 of 0000, 0000, 0000"
+              "nl": "0000 0000 0000... of 000000000000 of 0000, 0000, 0000",
+              "de": "0000 0000 0000... oder 000000000000 oder 0000, 0000, 0000"
             }
           },
           {
