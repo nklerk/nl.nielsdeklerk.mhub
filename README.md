@@ -20,9 +20,3 @@ With this app you can control the inputs and outputs, Send uControl commands (ir
 
 - [HDANYWHERE](https://hdanywhere.co.uk/)
 - [Store](http://hdanywhere.co.uk/multiroom-hdtv-matrix-systems.html)
-
-## Versions
-
-#### 0.1.1
-
-- Updated hdamhub module, fixed prontoHex
